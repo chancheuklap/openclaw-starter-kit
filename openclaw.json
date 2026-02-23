@@ -1,0 +1,589 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.21-2",
+    "lastTouchedAt": "2026-02-23T04:58:26.791Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-21T07:48:41.171Z",
+    "lastRunVersion": "2026.2.19-2",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "logging": {
+    "level": "info"
+  },
+  "auth": {
+    "profiles": {
+      "openai-codex:default": {
+        "provider": "openai-codex",
+        "mode": "oauth"
+      },
+      "anthropic:your_profile_name": {
+        "provider": "anthropic",
+        "mode": "token"
+      },
+      "google-gemini-cli:your_email@gmail.com": {
+        "provider": "google-gemini-cli",
+        "mode": "oauth"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      },
+      "models": {
+        "anthropic/claude-sonnet-4-6": {
+          "alias": "Sonnet"
+        },
+        "anthropic/claude-opus-4-6": {
+          "alias": "Opus"
+        },
+        "google-gemini-cli/gemini-3-pro-preview": {
+          "alias": "Gemini Pro"
+        },
+        "google-gemini-cli/gemini-3-flash-preview": {
+          "alias": "Gemini Flash"
+        },
+        "openai-codex/gpt-5.3-codex": {
+          "alias": "Codex"
+        }
+      },
+      "workspace": "~/.openclaw/workspace",
+      "memorySearch": {
+        "provider": "gemini",
+        "remote": {
+          "apiKey": "YOUR_GOOGLE_API_KEY"
+        },
+        "model": "gemini-embedding-001"
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "thinkingDefault": "high",
+      "blockStreamingDefault": "on",
+      "blockStreamingBreak": "text_end",
+      "blockStreamingChunk": {
+        "minChars": 80,
+        "maxChars": 600,
+        "breakPreference": "paragraph"
+      },
+      "blockStreamingCoalesce": {
+        "minChars": 150,
+        "maxChars": 800,
+        "idleMs": 300
+      },
+      "humanDelay": {
+        "mode": "natural"
+      },
+      "heartbeat": {
+        "every": "1h",
+        "model": "anthropic/claude-sonnet-4-6",
+        "target": "discord",
+        "to": "YOUR_DISCORD_USER_ID"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "heartbeat": {
+          "every": "1h",
+          "model": "anthropic/claude-sonnet-4-6",
+          "target": "discord",
+          "to": "YOUR_DISCORD_USER_ID"
+        },
+        "identity": {
+          "name": "my_claw",
+          "emoji": "🦞"
+        }
+      },
+      {
+        "id": "coach_claw",
+        "name": "coach_claw",
+        "workspace": "~/.openclaw/workspace-coach_claw",
+        "agentDir": "~/.openclaw/agents/coach_claw/agent",
+        "heartbeat": {
+          "every": "1h",
+          "model": "anthropic/claude-sonnet-4-6",
+          "target": "discord",
+          "to": "YOUR_DISCORD_USER_ID"
+        },
+        "identity": {
+          "name": "coach_claw",
+          "emoji": "👨🏻‍🏫"
+        }
+      },
+      {
+        "id": "info_claw",
+        "name": "info_claw",
+        "workspace": "~/.openclaw/workspace-info_claw",
+        "agentDir": "~/.openclaw/agents/info_claw/agent",
+        "heartbeat": {
+          "every": "1h",
+          "model": "anthropic/claude-sonnet-4-6",
+          "target": "discord",
+          "to": "YOUR_DISCORD_USER_ID"
+        },
+        "identity": {
+          "name": "info_claw",
+          "emoji": "🔍"
+        }
+      }
+    ]
+  },
+  "tools": {
+    "alsoAllow": [
+      "lobster"
+    ],
+    "web": {
+      "search": {
+        "provider": "brave",
+        "apiKey": "YOUR_BRAVE_SEARCH_API_KEY",
+        "maxResults": 10,
+        "timeoutSeconds": 60
+      }
+    },
+    "media": {
+      "audio": {
+        "enabled": true,
+        "models": [
+          {
+            "capabilities": [
+              "audio"
+            ],
+            "type": "cli",
+            "command": "sh",
+            "args": [
+              "-c",
+              "WAV=$(mktemp /tmp/openclaw-audio-XXXXXX.wav) && afconvert \"$1\" \"$WAV\" -d LEI16 -f WAVE && WHISPER_CPP_MODEL=$HOME/.local/share/whisper-cpp/models/ggml-base.bin whisper-cli -m $HOME/.local/share/whisper-cpp/models/ggml-base.bin -f \"$WAV\" --language zh --no-timestamps 2>/dev/null && rm -f \"$WAV\"",
+              "--",
+              "{{MediaPath}}"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "telegram",
+        "accountId": "my_claw"
+      }
+    },
+    {
+      "agentId": "coach_claw",
+      "match": {
+        "channel": "telegram",
+        "accountId": "coach_claw"
+      }
+    },
+    {
+      "agentId": "info_claw",
+      "match": {
+        "channel": "telegram",
+        "accountId": "info_claw"
+      }
+    },
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "discord",
+        "accountId": "my_claw"
+      }
+    },
+    {
+      "agentId": "coach_claw",
+      "match": {
+        "channel": "discord",
+        "accountId": "coach_claw"
+      }
+    },
+    {
+      "agentId": "info_claw",
+      "match": {
+        "channel": "discord",
+        "accountId": "info_claw"
+      }
+    }
+  ],
+  "messages": {
+    "ackReaction": "👀",
+    "ackReactionScope": "all"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "config": true,
+    "debug": true,
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "cron": {
+    "maxConcurrentRuns": 10
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "groups": {
+        "-100XXXXXXXXXX": {
+          "requireMention": true,
+          "groupPolicy": "open"
+        }
+      },
+      "allowFrom": [
+        "YOUR_TELEGRAM_USER_ID"
+      ],
+      "groupPolicy": "allowlist",
+      "streaming": true,
+      "accounts": {
+        "my_claw": {
+          "dmPolicy": "allowlist",
+          "botToken": "YOUR_TELEGRAM_BOT_TOKEN_1",
+          "groups": {
+            "-100XXXXXXXXXX": {
+              "requireMention": false,
+              "groupPolicy": "open"
+            }
+          },
+          "allowFrom": [
+            "YOUR_TELEGRAM_USER_ID"
+          ],
+          "groupPolicy": "allowlist",
+          "streaming": true,
+          "ackReaction": "🦞"
+        },
+        "coach_claw": {
+          "dmPolicy": "allowlist",
+          "botToken": "YOUR_TELEGRAM_BOT_TOKEN_2",
+          "groups": {
+            "-100XXXXXXXXXX": {
+              "requireMention": false,
+              "groupPolicy": "open"
+            }
+          },
+          "allowFrom": [
+            "YOUR_TELEGRAM_USER_ID"
+          ],
+          "groupPolicy": "allowlist",
+          "streaming": true,
+          "ackReaction": "👨🏻‍🏫"
+        },
+        "info_claw": {
+          "dmPolicy": "allowlist",
+          "botToken": "YOUR_TELEGRAM_BOT_TOKEN_3",
+          "groups": {
+            "-100XXXXXXXXXX": {
+              "requireMention": false,
+              "groupPolicy": "open"
+            }
+          },
+          "allowFrom": [
+            "YOUR_TELEGRAM_USER_ID"
+          ],
+          "groupPolicy": "allowlist",
+          "streaming": true,
+          "ackReaction": "🔍"
+        }
+      }
+    },
+    "discord": {
+      "markdown": {
+        "tables": "bullets"
+      },
+      "enabled": true,
+      "token": "YOUR_DISCORD_BOT_TOKEN_DEFAULT",
+      "groupPolicy": "allowlist",
+      "textChunkLimit": 1800,
+      "blockStreaming": false,
+      "streamMode": "off",
+      "draftChunk": {
+        "minChars": 200,
+        "maxChars": 1800,
+        "breakPreference": "paragraph"
+      },
+      "mediaMaxMb": 50,
+      "actions": {
+        "roles": true,
+        "moderation": true,
+        "presence": true
+      },
+      "replyToMode": "first",
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "YOUR_DISCORD_USER_ID"
+      ],
+      "execApprovals": {
+        "enabled": true,
+        "approvers": [
+          "YOUR_DISCORD_USER_ID"
+        ],
+        "target": "channel"
+      },
+      "accounts": {
+        "my_claw": {
+          "token": "YOUR_DISCORD_BOT_TOKEN_1",
+          "groupPolicy": "allowlist",
+          "textChunkLimit": 1800,
+          "blockStreaming": false,
+          "streamMode": "off",
+          "draftChunk": {
+            "minChars": 200,
+            "maxChars": 1800,
+            "breakPreference": "paragraph"
+          },
+          "replyToMode": "first",
+          "guilds": {
+            "YOUR_GUILD_ID_1": {
+              "requireMention": true,
+              "reactionNotifications": "own",
+              "channels": {
+                "YOUR_CHANNEL_ID_1": {
+                  "allow": true,
+                  "requireMention": false
+                }
+              }
+            },
+            "YOUR_GUILD_ID_2": {
+              "requireMention": false,
+              "reactionNotifications": "own"
+            }
+          },
+          "voice": {
+            "enabled": false,
+            "tts": {
+              "provider": "openai",
+              "openai": {
+                "voice": "alloy"
+              }
+            }
+          },
+          "ackReaction": "🦞"
+        },
+        "coach_claw": {
+          "token": "YOUR_DISCORD_BOT_TOKEN_2",
+          "groupPolicy": "allowlist",
+          "textChunkLimit": 1800,
+          "blockStreaming": false,
+          "streamMode": "off",
+          "draftChunk": {
+            "minChars": 200,
+            "maxChars": 1800,
+            "breakPreference": "paragraph"
+          },
+          "replyToMode": "first",
+          "guilds": {
+            "YOUR_GUILD_ID_1": {
+              "requireMention": true,
+              "reactionNotifications": "own",
+              "channels": {
+                "YOUR_CHANNEL_ID_2": {
+                  "allow": true,
+                  "requireMention": false
+                }
+              }
+            },
+            "YOUR_GUILD_ID_3": {
+              "requireMention": false,
+              "reactionNotifications": "own"
+            }
+          },
+          "voice": {
+            "enabled": false,
+            "tts": {
+              "provider": "openai",
+              "openai": {
+                "voice": "alloy"
+              }
+            }
+          },
+          "ackReaction": "👨🏻‍🏫"
+        },
+        "info_claw": {
+          "token": "YOUR_DISCORD_BOT_TOKEN_3",
+          "groupPolicy": "allowlist",
+          "textChunkLimit": 1800,
+          "blockStreaming": false,
+          "streamMode": "off",
+          "draftChunk": {
+            "minChars": 200,
+            "maxChars": 1800,
+            "breakPreference": "paragraph"
+          },
+          "replyToMode": "first",
+          "guilds": {
+            "YOUR_GUILD_ID_1": {
+              "requireMention": true,
+              "reactionNotifications": "own",
+              "channels": {
+                "YOUR_CHANNEL_ID_3": {
+                  "allow": true,
+                  "requireMention": false
+                }
+              }
+            },
+            "YOUR_GUILD_ID_4": {
+              "requireMention": false,
+              "reactionNotifications": "own"
+            }
+          },
+          "voice": {
+            "enabled": false,
+            "tts": {
+              "provider": "openai",
+              "openai": {
+                "voice": "alloy"
+              }
+            }
+          },
+          "ackReaction": "🔍"
+        }
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "calendar.add",
+        "contacts.add",
+        "reminders.add"
+      ]
+    }
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    },
+    "entries": {
+      "gh-issues": {
+        "enabled": false
+      },
+      "gemini": {
+        "enabled": true
+      },
+      "1password": {
+        "enabled": false
+      },
+      "bear-notes": {
+        "enabled": false
+      },
+      "blucli": {
+        "enabled": false
+      },
+      "bluebubbles": {
+        "enabled": false
+      },
+      "eightctl": {
+        "enabled": false
+      },
+      "gifgrep": {
+        "enabled": false
+      },
+      "goplaces": {
+        "enabled": false
+      },
+      "nano-banana-pro": {
+        "enabled": false
+      },
+      "notion": {
+        "enabled": false
+      },
+      "openhue": {
+        "enabled": false
+      },
+      "oracle": {
+        "enabled": false
+      },
+      "ordercli": {
+        "enabled": false
+      },
+      "sag": {
+        "enabled": false
+      },
+      "slack": {
+        "enabled": false
+      },
+      "songsee": {
+        "enabled": false
+      },
+      "sonoscli": {
+        "enabled": false
+      },
+      "spotify-player": {
+        "enabled": false
+      },
+      "things-mac": {
+        "enabled": false
+      },
+      "trello": {
+        "enabled": false
+      },
+      "voice-call": {
+        "enabled": false
+      },
+      "wacli": {
+        "enabled": false
+      },
+      "cron-thread-publisher": {
+        "enabled": false
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      },
+      "discord": {
+        "enabled": true
+      },
+      "google-gemini-cli-auth": {
+        "enabled": true
+      }
+    }
+  }
+}
