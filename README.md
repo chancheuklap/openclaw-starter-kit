@@ -155,4 +155,14 @@ openclaw gateway restart
 
 ---
 
+## 💬 最后说一句
+
+如果你已经知道龙虾，那么你并没有被时代抛弃；如果最后我行了，你也一定行。
+
+关于我漏掉的细节，可以直接粘贴该网页网址，问问你手上任何的 AI 助手——我们一起主动起来，学习起来，干起来。
+
+Peace ✌️
+
+---
+
 > 📌 基于 OpenClaw `2026.2.21-2` 版本 | [官方文档](https://docs.openclaw.ai/) | [OpenClaw 101](https://openclaw101.dev/zh) | [GitHub 源码](https://github.com/openclaw/openclaw)
