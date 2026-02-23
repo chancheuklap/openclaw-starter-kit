@@ -4,86 +4,125 @@
 >
 > 关于我漏掉的细节，可以直接粘贴该网页网址，问问你手上任何的 AI 助手——我们一起主动起来，学习起来，干起来。Peace ✌️
 
-**免费送你一份跑通了的 OpenClaw 配置，三个 AI 助理同时在线，Telegram + Discord 双平台。**
+---
 
-> 这是我花了数周打磨的生产环境配置，脱敏后开源分享。你不需要从零摸索，直接在这个基础上改就行。
+**这是什么？** 一份已经调好的 OpenClaw 配置文件，拿回去改几个地方就能用。
+
+**能干嘛？** 让你同时拥有三个 AI 助理，分别负责日常杂事、专业咨询和信息收集，在 Telegram 和 Discord 上随时找它们聊天、下指令。
+
+**要花钱吗？** OpenClaw 本身免费开源。AI 模型需要付费（按量计费或订阅制），但配置里也包含了免费模型的方案。
 
 ---
 
-## ⬇️ 下载方式（选一种就行）
+## ⬇️ 第一步：下载
 
-### 方式一：一键下载 ZIP（推荐小白用）
+**什么都不用装，点一下就行：**
 
-👉 **点击这个绿色按钮下载：**
+[![点击下载](https://img.shields.io/badge/⬇️_点击这里下载-238636?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chancheuklap/openclaw-starter-kit/archive/refs/heads/main.zip)
 
-[![Download ZIP](https://img.shields.io/badge/⬇️_点击下载_ZIP-238636?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chancheuklap/openclaw-starter-kit/archive/refs/heads/main.zip)
+下载后**解压**，你会看到这些文件：
 
-下载后解压，你会得到这些文件：
-
-```
-openclaw-starter-kit/
-├── openclaw.json       ← 配置文件，复制到 ~/.openclaw/ 目录
-├── 配置详解.md          ← 每个参数的中文解释
-└── 参考链接.md          ← 精选学习资源
-```
-
-### 方式二：用命令下载（适合有终端经验的同学）
-
-```bash
-git clone https://github.com/chancheuklap/openclaw-starter-kit.git
-```
+| 文件 | 干嘛用的 |
+|------|----------|
+| `openclaw.json` | **配置文件**（最重要的，就是它） |
+| `配置详解.md` | 每个参数是什么意思（当字典查） |
+| `参考链接.md` | 学习资源合集 |
 
 ---
 
-## 🚀 三步用起来
+## 🔧 第二步：安装 OpenClaw
 
-### 第一步：确保你已经安装了 OpenClaw
-
-如果还没装，先跑这行命令：
+如果你还没装过 OpenClaw，打开电脑的**终端**（Terminal），粘贴这行命令：
 
 ```bash
 npx openclaw@latest
 ```
 
-跟着引导走完就行。详细教程看 👉 [OpenClaw 101 中文指南](https://openclaw101.dev/zh)
+它会问你几个问题，跟着选就行。
 
-### 第二步：备份你的旧配置（重要！）
-
-```bash
-cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup
-```
-
-### 第三步：复制新配置 + 替换占位符
-
-```bash
-cp openclaw.json ~/.openclaw/openclaw.json
-```
-
-然后用任意文本编辑器打开 `~/.openclaw/openclaw.json`，搜索 `YOUR_` ，把所有占位符替换成你自己的：
-
-| 要替换的内容 | 是什么 | 去哪里拿 |
-|---|---|---|
-| `YOUR_GOOGLE_API_KEY` | Google AI 密钥 | [点这里申请（免费）](https://aistudio.google.com/apikey) |
-| `YOUR_BRAVE_SEARCH_API_KEY` | 网页搜索密钥 | [点这里申请（免费）](https://brave.com/search/api/) |
-| `YOUR_TELEGRAM_BOT_TOKEN_*` | Telegram 机器人令牌 | Telegram 搜 @BotFather，按提示创建 |
-| `YOUR_DISCORD_BOT_TOKEN_*` | Discord 机器人令牌 | [Discord 开发者后台](https://discord.com/developers/applications) |
-| `YOUR_GATEWAY_TOKEN` | 网关令牌 | 运行 `openclaw onboard` 时自动生成 |
-| `YOUR_TELEGRAM_USER_ID` | 你的 Telegram 数字 ID | Telegram 搜 @userinfobot，它会告诉你 |
-| `YOUR_DISCORD_USER_ID` | 你的 Discord 用户 ID | Discord 设置 → 高级 → 开启开发者模式 → 右键自己头像 → 复制用户 ID |
-| `YOUR_GUILD_ID_*` | Discord 服务器 ID | 右键服务器图标 → 复制服务器 ID |
-| `YOUR_CHANNEL_ID_*` | Discord 频道 ID | 右键频道名 → 复制频道 ID |
-
-替换完保存，然后重启：
-
-```bash
-openclaw gateway restart
-```
-
-搞定！🎉
+> 💡 **不知道"终端"在哪？** 
+> - Mac：按 `Cmd + 空格`，输入"终端"，回车
+> - Windows：按 `Win + R`，输入 `cmd`，回车
+>
+> **装不上？报错了？** 别慌——把报错信息截图，发给你的任意 AI 助手（ChatGPT、Kimi、豆包都行），问它怎么解决。或者来小红书直播间问我，我帮你看。
 
 ---
 
-## 🏗️ 这个配置有什么
+## 📝 第三步：填你自己的信息
+
+用记事本（或任何文本编辑器）打开下载的 `openclaw.json`，你会看到很多 `YOUR_` 开头的内容——这些是占位符，需要换成你自己的。
+
+**别被数量吓到！** 下面一个一个教你拿：
+
+### 🤖 创建你的 Telegram 机器人
+
+1. 打开 Telegram，搜索 **@BotFather**
+2. 发送 `/newbot`
+3. 它会问你机器人叫什么名字，随便起
+4. 创建成功后它会给你一串 **token**（长这样：`123456789:ABCdefGHI...`）
+5. 复制这个 token，替换配置文件里的 `YOUR_TELEGRAM_BOT_TOKEN_1`
+
+> 这个配置用了三个机器人（三个 AI 助理各一个），所以你要重复三次，分别替换 `_1`、`_2`、`_3`。
+>
+> **只想先用一个？** 没问题。怎么简化配置，来小红书问我，或者直接把这个页面网址丢给 AI 助手，让它帮你改。
+
+### 🎮 创建你的 Discord 机器人
+
+1. 打开 [Discord 开发者后台](https://discord.com/developers/applications)
+2. 点 **New Application** → 起个名字 → 左边点 **Bot** → 点 **Reset Token** → 复制 token
+3. 替换配置里的 `YOUR_DISCORD_BOT_TOKEN_1`
+
+> 同样需要三个。流程一样，重复三次。
+>
+> ⚠️ **Bot 需要邀请到你的服务器才能用。** 这一步有点绕——建议直接把这个页面网址粘贴给你的 AI 助手，让它手把手教你生成邀请链接。
+
+### 🔑 申请免费的 API 密钥
+
+| 替换内容 | 去哪里拿 | 要钱吗 |
+|----------|----------|--------|
+| `YOUR_GOOGLE_API_KEY` | [Google AI Studio](https://aistudio.google.com/apikey) → 创建 API 密钥 | 免费 |
+| `YOUR_BRAVE_SEARCH_API_KEY` | [Brave Search API](https://brave.com/search/api/) → 注册 → Free 计划 | 免费 |
+
+### 🆔 找到你自己的 ID
+
+| 替换内容 | 怎么拿 |
+|----------|--------|
+| `YOUR_TELEGRAM_USER_ID` | Telegram 搜索 **@userinfobot**，它会自动告诉你 |
+| `YOUR_DISCORD_USER_ID` | Discord 设置 → 高级 → 打开**开发者模式** → 回到聊天界面，右键点自己头像 → **复制用户 ID** |
+| `YOUR_GUILD_ID_*` | 右键点 Discord **服务器图标** → 复制服务器 ID |
+| `YOUR_CHANNEL_ID_*` | 右键点 Discord **频道名** → 复制频道 ID |
+
+> 💡 Discord 的"开发者模式"打开后，右键菜单才会出现"复制 ID"选项。找不到的话问 AI 助手。
+
+### 剩下两个不用自己填
+
+| 替换内容 | 说明 |
+|----------|------|
+| `YOUR_GATEWAY_TOKEN` | 安装 OpenClaw 时**自动生成**的，去 `~/.openclaw/openclaw.json` 里找现有的值，复制过来 |
+| `your_email@gmail.com` | 你的 Google 邮箱，用于 Gemini 模型登录 |
+
+---
+
+## 🚀 第四步：放进去，启动
+
+```bash
+# 先备份你现在的配置（万一要改回来）
+cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup
+
+# 把你改好的新配置放进去
+cp openclaw.json ~/.openclaw/openclaw.json
+
+# 重启
+openclaw gateway restart
+```
+
+> ⚠️ **这一步操作的是系统文件。** 如果你不确定自己改得对不对，**强烈建议把你改好的 `openclaw.json` 发给 AI 助手**，让它帮你检查一遍再放进去。稳一点不丢人。
+
+搞定！🎉 现在去 Telegram 或 Discord 找你的机器人说句话试试。
+
+---
+
+## 🏗️ 你会得到什么
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -96,67 +135,64 @@ openclaw gateway restart
 └─────────────────────────────────────────────┘
 ```
 
-**三个 AI Agent，各有分工：**
-- 🦞 **main** — 你的日常万能助理
-- 👨🏻‍🏫 **coach** — 某个领域的专项顾问
-- 🔍 **info** — 信息采集和内容处理
+**三个 AI 助理，各管一摊：**
+- 🦞 **main** — 万能助手，啥都能聊、啥都能干
+- 👨🏻‍🏫 **coach** — 某个领域的专属顾问（你自己定它懂什么）
+- 🔍 **info** — 帮你收集和整理信息
 
-**每个 Agent 独立运行：**
-- 各自有专属的 Telegram Bot 和 Discord Bot
-- 各自有独立的记忆和工作空间
-- 各自有心跳巡检（每小时自动 check-in）
-
-**五个 AI 模型混合使用：**
-- Claude Opus — 主力推理（最聪明）
-- Claude Sonnet — 心跳巡检（性价比高）
-- Gemini Flash — 定时脚本（最便宜）
-- Gemini Pro — 复杂分析备选
-- GPT Codex — 写代码专用
-
-**还有这些已调好的功能：**
-- ✅ 消息分块输出（像人一样一段一段打字）
-- ✅ 本地语音转写（零 API 费用，用 Whisper）
-- ✅ 命令执行安全审批（危险操作需要你点批准）
-- ✅ 长对话自动压缩（不会 token 爆炸）
-- ✅ Brave 网页搜索集成
+**已经调好的能力：**
+- ✅ 像真人一样一段一段打字（不是一坨丢过来）
+- ✅ 语音消息自动转文字（本地处理，不花钱）
+- ✅ 危险操作需要你手动批准（不会乱删东西）
+- ✅ 每小时自动巡查一次（帮你看邮件、看日历）
+- ✅ 聊太久也不会崩（自动压缩历史对话）
+- ✅ 能上网搜索
 
 ---
 
-## 📖 想了解每个参数的含义？
+## ❓ 可能遇到的问题
 
-👉 看 [**配置详解.md**](配置详解.md) — 每一块都有中文注释，解释「是什么」和「为什么这么设」。
+**"我只想用一个助理，不需要三个"**
+> 可以。把多余的删掉就行。不确定删哪些——把这个页面发给 AI 助手，告诉它"我只要保留一个 agent，帮我精简配置"。
 
-## 📚 从零开始学 OpenClaw？
+**"我只用 Telegram / 只用 Discord"**
+> 同上。让 AI 助手帮你删掉不需要的平台配置。
 
-👉 看 [**参考链接.md**](参考链接.md) — 精选的中英文教程，从安装到进阶。
+**"我没有 Mac"**
+> 配置里有一项语音转写功能是 macOS 专属的。Linux/Windows 用户让 AI 助手帮你改成 ffmpeg 方案，或者直接关掉它。
 
-👉 特别推荐 [**OpenClaw 101**](https://openclaw101.dev/zh) — 7 天系统学习路径，293+ 篇教程聚合。
+**"报错了 / 机器人没反应"**
+> 截图报错信息 → 发给 AI 助手。如果 AI 也搞不定，来小红书找我，直播间里帮你看。
+
+**"想了解每个参数具体是什么意思"**
+> 打开 [**配置详解.md**](配置详解.md)，里面有逐行中文注释。
 
 ---
 
-## ❓ 常见问题
+## 📚 学习资源
 
-**Q：我只用 Telegram / 只用 Discord，不需要双平台怎么办？**
-> 删掉你不用的 channel 配置就行。比如只用 Discord，就把 `channels.telegram` 整块删掉，对应的 bindings 里 telegram 的条目也删掉。
+刚接触 OpenClaw？推荐按顺序看：
 
-**Q：我不需要三个 Agent，一个就够了怎么办？**
-> `agents.list` 里只保留 `main` 那一个，删掉 coach 和 info。bindings 里也只保留 main 的。
+1. 👉 [**OpenClaw 101 — 7 天入门**](https://openclaw101.dev/zh)（中文，从零开始，最适合新手）
+2. 👉 [**官方文档**](https://docs.openclaw.ai/)（查具体参数用）
+3. 👉 [**更多资源**](参考链接.md)（视频教程、部署指南、深度文章）
 
-**Q：我没有 Mac，Whisper 语音转写能用吗？**
-> 配置里的 `afconvert` 是 macOS 专属命令。Linux 用户需要把它换成 `ffmpeg`，或者直接关掉 `media.audio`（设 `enabled: false`）。
+---
 
-**Q：这些 API Key 要花钱吗？**
-> Google API Key 和 Brave Search API Key 都有免费额度，个人使用基本够。AI 模型（Claude / Gemini）的费用取决于你的使用量和订阅方式。
+## 🦞 关于我
 
-**Q：替换占位符的时候引号要不要删？**
-> 不要删！只替换引号里面的内容。比如 `"YOUR_GOOGLE_API_KEY"` 改成 `"AIzaSy..."` 。
+我是一个正在用 AI 搭建自己工作系统的人。这个配置是我实际在用的，不是教程里抄的。
+
+如果你也在摸索 OpenClaw，欢迎来**小红书**找我——我会不定期直播搭建过程，踩过的坑、调过的参数、犯过的错，全都现场聊。
+
+> **小红书搜索：** `（你的小红书名字）`
 
 ---
 
 ## ⭐ 觉得有用？
 
-给个 Star ⭐ 就是最好的支持！有问题欢迎开 Issue。
+点个 Star ⭐ 让更多人看到。有问题欢迎开 Issue。
 
 ---
 
-> 📌 基于 OpenClaw `2026.2.21-2` 版本 | [官方文档](https://docs.openclaw.ai/) | [OpenClaw 101](https://openclaw101.dev/zh) | [GitHub 源码](https://github.com/openclaw/openclaw)
+> 📌 基于 OpenClaw `2026.2.21-2` 版本 | [官方文档](https://docs.openclaw.ai/) | [OpenClaw 101](https://openclaw101.dev/zh)
